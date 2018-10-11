@@ -4,6 +4,9 @@ import java.rmi.RemoteException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,12 +16,14 @@ public class RentalServer {
 	
 	public static void main(String[] args) throws ReservationException,
 			NumberFormatException, IOException {
+		System.setSecurityManager(null);
 		CrcData data  = loadData("hertz.csv");
+		CarRentalCompany crc = new CarRentalCompany(data.name, data.regions, data.cars);
 		ICarRentalCompany stub = (ICarRentalCompany)
-				UnicastRemoteObject.exportObject(crc, 0);
+				UnicastRemoteObject.exportObject((Remote) crc, 0);
 		Registry registry = LocateRegistry.getRegistry();
-		registry.rebind(<name>, stub);
-		new CarRentalCompany(data.name, data.regions, data.cars);
+		registry.rebind(crc.getName(), stub);
+
 	}
 
 	public static CrcData loadData(String datafile)
