@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CarRentalCompany {
+public class CarRentalCompany implements ICarRentalCompany {
 
 	private static Logger logger = Logger.getLogger(CarRentalCompany.class.getName());
 	
@@ -144,6 +144,7 @@ public class CarRentalCompany {
 						/ (1000 * 60 * 60 * 24D));
 	}
 
+
 	public Reservation confirmQuote(Quote quote) throws ReservationException {
 		logger.log(Level.INFO, "<{0}> Reservation of {1}", new Object[]{name, quote.toString()});
 		List<Car> availableCars = getAvailableCars(quote.getCarType(), quote.getStartDate(), quote.getEndDate());
@@ -178,5 +179,36 @@ public class CarRentalCompany {
 		}
 		return out.toString();
 	}
+
+	public ReservationConstraints getReservationConstraints(Date start, Date end, String carType, String region) {
+		return new ReservationConstraints(start, end, carType, region);
+	}
+	/*****************
+	Extra's
+	 *****************/
+
+	public List<String> getReservationRenter(String carRenter){
+		List<String> renterReservation = null;
+		for (Car car : cars) {
+			for (Reservation res : car.getReservations()){
+				if (res.getCarRenter().equals(carRenter)){
+					renterReservation.add(res.toString());
+				}
+			}
+		}
+		return renterReservation;
+	}
+
+	public int getNumberOfReservationsCar(String carType) {
+		CarType type = carTypes.get(carType);
+		int i=0;
+		for (Car car : cars) {
+			if (car.getType().equals(carType)) {
+				i += car.getReservations().size();
+			}
+		}
+		return i;
+	}
+
 	
 }
