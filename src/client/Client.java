@@ -38,7 +38,6 @@ public class Client extends AbstractTestBooking {
 		Registry registry = LocateRegistry.getRegistry("localhost", 0);
 		crc = (ICarRentalCompany) registry.lookup("ICarRentalCompany");
 
-		throw new UnsupportedOperationException("TODO");
 	}
 	
 	/**
@@ -55,7 +54,6 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected void checkForAvailableCarTypes(Date start, Date end) throws Exception {
 		System.out.println(crc.getAvailableCarTypes(start,end));
-		throw new UnsupportedOperationException("TODO");
 	}
 
 	/**
@@ -85,7 +83,7 @@ public class Client extends AbstractTestBooking {
 		System.out.println("end" + end);
 		System.out.println("car type:" + carType);
 		System.out.println("region:" + region);
-		throw new UnsupportedOperationException("TODO");
+		return null;
 	}
 
 	/**
@@ -100,8 +98,7 @@ public class Client extends AbstractTestBooking {
 	 */
 	@Override
 	protected Reservation confirmQuote(Quote quote) throws Exception {
-		crc.confirmQuote(quote);
-		throw new UnsupportedOperationException("TODO");
+		return crc.confirmQuote(quote);
 	}
 	
 	/**
@@ -117,7 +114,7 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected List<Reservation> getReservationsByRenter(String clientName) throws Exception {
 		System.out.println(crc.getReservationRenter(clientName));
-		throw new UnsupportedOperationException("TODO");
+		return null;
 	}
 
 	/**
@@ -133,6 +130,6 @@ public class Client extends AbstractTestBooking {
 	@Override
 	protected int getNumberOfReservationsForCarType(String carType) throws Exception {
 		System.out.println( "Number of reservation for cartype" + carType + ":" + crc.getNumberOfReservationsCar(carType));
-		throw new UnsupportedOperationException("TODO");
+		return 0;
 	}
 }
